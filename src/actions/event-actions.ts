@@ -73,7 +73,7 @@ export async function createEvent(formData: FormData) {
     });
 
     console.log('[CACHE] Revalidating after event creation', {
-        eventId: result.id,
+        eventId: event.id,
         timestamp: new Date().toISOString(),
         stackTrace: new Error().stack?.split('\n').slice(1, 3)
       });

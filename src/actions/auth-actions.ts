@@ -120,5 +120,5 @@ export async function register(formData: FormData) {
 // Sign out action
 export async function signOut() {
   await authSignOut();
-  redirect('/login');
+  redirect('http://localhost:3000/login');
 }

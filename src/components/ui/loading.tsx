@@ -12,18 +12,25 @@ export function Spinner({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-// Loading button content
-export function LoadingButton({ children, isLoading, ...props }: {
-  children: React.ReactNode;
-  isLoading: boolean;
-} & React.ComponentProps<"span">) {
+// Loading button component that extends Button
+import { Button } from "@/components/ui/button";
+import { forwardRef } from "react";
+
+export const LoadingButton = forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<typeof Button> & {
+    loading?: boolean;
+  }
+>(({ children, loading, disabled, ...props }, ref) => {
   return (
-    <span className={cn("flex items-center gap-2", props.className)}>
-      {isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
+    <Button ref={ref} disabled={disabled || loading} {...props}>
+      {loading && <Loader2 className="h-4 w-4 animate-spin" />}
       {children}
-    </span>
+    </Button>
   );
-}
+});
+
+LoadingButton.displayName = "LoadingButton";
 
 // Card skeleton for dashboard cards
 export function CardSkeleton({ className }: { className?: string }) {

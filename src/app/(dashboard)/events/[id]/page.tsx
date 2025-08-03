@@ -127,7 +127,11 @@ export default async function EventPage({
                             : 'Past'}
                         </p>
                       </div>
-                      <form action={`/api/reminders/${reminder.id}/delete`}>
+                      <form action={async () => {
+                        'use server';
+                        const { deleteReminder } = await import('@/actions/reminder-actions');
+                        await deleteReminder(reminder.id);
+                      }}>
                         <Button variant="destructive" size="sm" type="submit">
                           Delete
                         </Button>
@@ -147,6 +151,10 @@ export default async function EventPage({
             eventId={event.id}
             eventDate={event.date}
             eventTitle={event.title}
+            existingReminder={event.reminders.length > 0 ? {
+              id: event.reminders[0].id,
+              reminderTime: event.reminders[0].reminderTime
+            } : undefined}
           />
         </div>
       </div>
